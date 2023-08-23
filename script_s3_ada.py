@@ -2,6 +2,7 @@ from datetime import datetime
 import os
 import boto3
 
+
 def send_files():
     # variáveis AWS
     client = boto3.client('s3')
@@ -24,11 +25,11 @@ def send_files():
             data.close()
             now = str(datetime.now()).replace(':', '').replace('.', '').replace(' ', '')
             os.rename(os.path.join(cur_path, arq), os.path.join(logs_path, f'{now}_{arq}'))
+            print(f'Arquivo {arq} integrado e movido para a pasta de logs!')
 
         client.close()
 
         print('Itens integrados com sucesso!')
-        print('Pasta logs atualizada!')
 
 
 if __name__ == '__main__':
