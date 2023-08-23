@@ -2,28 +2,34 @@ from datetime import datetime
 import os
 import boto3
 
+def send_files():
+    # variáveis AWS
+    client = boto3.client('s3')
+    bucket = 'projeto-final-ada'
 
-client = boto3.client('s3')
-bucket = 'projeto-final-ada'
-cur_path = os.path.join(os.getcwd(), 'files')
-logs_path = os.path.join(os.getcwd(), 'log_integracao')
-arquivos = os.listdir('files')
+    # Paths
+    cur_path = os.path.join(os.getcwd(), 'files')
+    logs_path = os.path.join(os.getcwd(), 'log_integracao')
 
-if len(arquivos) <= 0:
-    print('Não existem relatórios pendentes para integração!')
-else:
-    for arq in arquivos:
-        filename = os.path.join(cur_path, arq)
-        data = open(filename, 'rb')
-        # Envia itens para o S3
-        client.upload_file(filename, bucket, arq)
-        data.close()
+    arquivos = os.listdir('files')
 
-    client.close()
+    if len(arquivos) <= 0:
+        print('Não existem relatórios pendentes para integração!')
+    else:
+        for arq in arquivos:
+            filename = os.path.join(cur_path, arq)
+            data = open(filename, 'rb')
+            # Envia itens para o S3
+            client.upload_file(filename, bucket, arq)
+            data.close()
+            now = str(datetime.now()).replace(':', '').replace('.', '').replace(' ', '')
+            os.rename(os.path.join(cur_path, arq), os.path.join(logs_path, f'{now}_{arq}'))
 
-    for arq in arquivos:
-        # Move os arquivos para a pasta de logs
-        now = str(datetime.now()).replace(':', '').replace('.', '').replace(' ', '')
-        os.rename(os.path.join(cur_path, arq), os.path.join(logs_path, f'{now}_{arq}'))
+        client.close()
 
-    print('Itens integrados com sucesso!')
+        print('Itens integrados com sucesso!')
+        print('Pasta logs atualizada!')
+
+
+if __name__ == '__main__':
+    send_files()
