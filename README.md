@@ -47,6 +47,7 @@ Para que os itens sejam integrados basta:
 ## Arquitetura Planejada
 <figure>
 <p align="center">
-  <img src="https://github.com/myllamachaado/projeto-final-ada/blob/master/img/img1.PNG"/><br>
+  <img src="https://github.com/myllamachaado/projeto-final-ada/blob/master/img/img3.PNG"/><br>
 </p>
 </figure>
+
