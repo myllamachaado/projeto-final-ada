@@ -23,7 +23,7 @@ def send_files():
                 client.upload_file(filename, BUCKET_NAME, arq)
 
             # Guarda a data e hora da integração
-            now = str(datetime.now()).replace(':', '').replace('.', '').replace(' ', '')
+            now = str(datetime.now()).replace(':', '').replace('.', '').replace(' ', '_')
 
             # Move o arquivo da pasta files para logs
             os.rename(filename, os.path.join(path, 'log_integracao', f'{now}_{arq}'))
